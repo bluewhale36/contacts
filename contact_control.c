@@ -37,6 +37,7 @@ CONTACT_STATUS get_all_contacts(CONTACT *contacts, const int max_contacts)
 		deserialize_contact(&contact, str);
 		contacts[i] = contact;
 	}
+	return SUCCESS;
 }
 
 /*

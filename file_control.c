@@ -5,6 +5,8 @@
 #include <string.h>
 #include "headers/file_control.h"
 
+const char *file_path = "contacts.txt";
+
 FILE_CONTROL_RESULT open_file(char *mode)
 {
 	FILE_STATUS status = ERROR;

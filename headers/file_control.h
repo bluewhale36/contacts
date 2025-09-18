@@ -21,7 +21,7 @@ typedef struct file_control_result
     FILE *fp;
 } FILE_CONTROL_RESULT;
 
-const char *file_path = "../contacts.txt";
+extern const char *file_path;
 
 FILE_CONTROL_RESULT open_file(char *mode);
 FILE_CONTROL_RESULT close_file(FILE *fp);
