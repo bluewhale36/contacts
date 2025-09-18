@@ -1,0 +1,28 @@
+//
+// Created by 우승훈 on 9/18/25.
+//
+
+#ifndef MENU_CONTROL_H
+#define MENU_CONTROL_H
+
+typedef enum menu_selection
+{
+    PRINT_CONTACTS = 1,
+    REGISTER_CONTACT,
+    UPDATE_CONTACT,
+    DELETE_CONTACT,
+    EXIT_PROGRAM = 0
+} MENU_SELECTION;
+
+void menu_input(MENU_SELECTION *selection);
+void print_menu();
+
+/*
+    각 enum 에 대응되는 함수
+*/
+void print_contacts();
+void register_contact();
+void update_contact();
+void delete_contact();
+
+#endif //MENU_CONTROL_H

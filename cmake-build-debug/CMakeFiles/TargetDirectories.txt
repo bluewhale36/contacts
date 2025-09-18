@@ -1,0 +1,3 @@
+/Users/wooseunghun/src/C/contacts/cmake-build-debug/CMakeFiles/contacts.dir
+/Users/wooseunghun/src/C/contacts/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/wooseunghun/src/C/contacts/cmake-build-debug/CMakeFiles/rebuild_cache.dir
