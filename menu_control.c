@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 #include "headers/menu_control.h"
-#include "headers/contact_structor.h"
+#include "headers/contact_control.h"
 
 void menu_input(MENU_SELECTION *selection)
 {
@@ -26,7 +26,16 @@ void print_menu()
 
 void print_contacts()
 {
-
+    CONTACT contact_arr[100];
+    if (get_all_contacts(contact_arr, 100) == SUCCESS)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            char buffer[200];
+            contact_to_string_buffered(contact_arr +i, buffer, 200);
+            puts(buffer);
+        }
+    }
 }
 void register_contact()
 {

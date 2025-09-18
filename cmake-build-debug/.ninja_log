@@ -2,3 +2,10 @@
 1	30	1758187064894562258	CMakeFiles/contacts.dir/main.c.o	820d7e690d1e7215
 2	30	1758187064894899178	CMakeFiles/contacts.dir/menu_control.c.o	b87ec5be0f69bd21
 30	65	1758187064923116330	contacts	7a166c73a430df4a
+5	229	1758202106730663086	CMakeFiles/contacts.dir/contact_structor.c.o	c34a614da97284aa
+5	230	1758202106730957963	CMakeFiles/contacts.dir/file_control.c.o	fa4c054f0dbf0e42
+4	230	1758202106730182541	CMakeFiles/contacts.dir/main.c.o	820d7e690d1e7215
+1	42	1758202147265358322	CMakeFiles/contacts.dir/menu_control.c.o	b87ec5be0f69bd21
+1	35	1758202182532768518	CMakeFiles/contacts.dir/contact_control.c.o	aea0d3460141750
+1	26	1758202235307515279	CMakeFiles/contacts.dir/file_control.c.o	fa4c054f0dbf0e42
+0	29	1758202235307181276	CMakeFiles/contacts.dir/contact_control.c.o	aea0d3460141750

@@ -3,35 +3,39 @@
 //
 
 #include "headers/contact_control.h"
+#include <string.h>
 #include "headers/file_control.h"
 
 /*
 	MENU_SELECTION enum 의 PRINT_CONTACTS
 	모든 연락처 출력
  */
-CONTACT* get_all_contacts()
+CONTACT_STATUS get_all_contacts(CONTACT *contacts, const int max_contacts)
 {
-	FILE_CONTROL_RESULT file_control_result = open_file("r");
-	if (file_control_result.fp == NULL)
+	const FILE_CONTROL_RESULT file_control_result = open_file("r");
+	if (file_control_result.status == ERROR)
 	{
-		return NULL;
+		return FAILED;
 	}
-	if (file_control_result.status == OPENED_WITH_CREATION)
+	if (file_control_result.status == OPENED_AS_NEW_FILE)
 	{
-		printf("저장된 연락처가 없습니다.");
+		return NO_CONTACT;
 	}
 
-	char str[150] = "";
 	FILE *rfp = file_control_result.fp;
-	for (int i = 1; ; i++)
+	for (int i = 0; i < max_contacts; i++)
 	{
-		fgets(str, 150, rfp);
+		char str[200];
+		fgets(str, 200, rfp);
 
 		if (feof(rfp))
 		{
 			break;
 		}
 
+		CONTACT contact;
+		deserialize_contact(&contact, str);
+		contacts[i] = contact;
 	}
 }
 
@@ -39,7 +43,7 @@ CONTACT* get_all_contacts()
 	MENU_SELECTION enum 의 REGISTER_CONTACT, UPDATE_CONTACT
 	하나의 연락처 저장, 수정.
  */
-void save_one_contact(CONTACT contact)
+CONTACT_STATUS save_one_contact(const CONTACT *contact)
 {
 
 }
@@ -48,7 +52,37 @@ void save_one_contact(CONTACT contact)
 	MENU_SELECTION enum 의 DELETE_CONTACT
 	하나의 연락처 삭제.
  */
-void delete_one_contact(long id)
+CONTACT_STATUS delete_one_contact(long id)
+{
+
+}
+
+CONTACT_STATUS deserialize_contact(CONTACT *contact, const char *str)
+{
+	char given_str[200];
+	strcpy(given_str, str);
+
+	char *token = strtok(given_str, ";");
+
+	contact -> id = strtol(token, NULL, 0);
+	token = strtok(NULL, ";");
+
+	strcpy(contact -> name, token);
+	token = strtok(NULL, ";");
+
+	contact -> age = atoi(token);
+	token = strtok(NULL, ";");
+
+	strcpy(contact -> phone, token);
+	token = strtok(NULL, ";");
+
+	strcpy (contact -> memo, token != NULL ? token : "");
+
+	return SUCCESS;
+}
+
+
+CONTACT_STATUS serialize_contact(const CONTACT *contact, char *str)
 {
 
 }

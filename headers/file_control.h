@@ -6,14 +6,13 @@
 #define FILE_CONTROL_H
 
 #include <stdio.h>
-#include "contact_structor.h"
 
 typedef enum file_status
 {
     ERROR = -1,
     CLOSED = 0,
     OPENED = 1,
-    OPENED_WITH_CREATION = 2
+    OPENED_AS_NEW_FILE = 2
 } FILE_STATUS;
 
 typedef struct file_control_result

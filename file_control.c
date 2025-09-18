@@ -19,7 +19,7 @@ FILE_CONTROL_RESULT open_file(char *mode)
         fclose(wfp);
         rfp = fopen(file_path, "r");
         fclose(rfp);
-        status = OPENED_WITH_CREATION;
+        status = OPENED_AS_NEW_FILE;
     }
 
     /*

@@ -16,7 +16,7 @@ int main(void)
         switch (selection)
         {
         case PRINT_CONTACTS:
-            puts("print contacts");
+            print_contacts();
             break;
         case REGISTER_CONTACT:
             puts("register contact");
