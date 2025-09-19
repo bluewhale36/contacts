@@ -62,6 +62,26 @@ void register_contact()
 {
     CONTACT contact;
     puts("새로운 연락처를 추가합니다.");
+
+    printf("이름을 입력하세요 >> ");
+    scanf("%s", contact.name);
+
+    printf("나이를 입력하세요 >> ");
+    scanf("%d", &contact.age);
+
+    printf("전화번호를 숫자만 입력하세요 >> ");
+    scanf("%s", contact.phone);
+
+    printf("메모를 입력하세요 >> ");
+    scanf("%s", contact.memo);
+
+    contact.id = 100;
+
+    char buffer[200];
+    contact_to_string_buffered(&contact, buffer, 200);
+    puts(buffer);
+
+    save_one_contact(&contact);
 }
 void update_contact()
 {

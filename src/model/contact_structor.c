@@ -20,7 +20,7 @@ void contact_to_string_human_readable_buffered(const CONTACT *contact, char *buf
 {
 	snprintf(
 		buffer, size,
-		"%-5ld\t%5s\t%3d\t%15s\t\t%-50s",
+		"%-5ld\t%5s\t%3d\t%16s\t\t%-50s",
 		contact -> id, contact -> name, contact -> age, contact -> phone, contact -> memo
 	);
 }

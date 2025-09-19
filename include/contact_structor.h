@@ -4,14 +4,16 @@
 
 #ifndef CONTACTS_STRUCTOR_H
 #define CONTACTS_STRUCTOR_H
+
 #include <stdlib.h>
+#define FILE_LINE_MAX_LENGTH 200 // 파일 한 줄당 최대 길이 (예상)
 
 typedef struct contact
 {
     long id;        // 연락처 식별자
     char name[30];  // 이름
     int age;        // 나이
-    char phone[15]; // 전화번호
+    char phone[16]; // 전화번호
     char memo[51];  // 메모
 } CONTACT;
 

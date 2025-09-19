@@ -5,7 +5,7 @@
 #include <stdbool.h> // bool 타입을 사용하기 위해 추가
 #include <stdio.h>
 
-const char *file_path = "../../data/contacts.txt";
+const char *file_path = "../data/contacts.txt";
 
 FILE_CONTROL_RESULT open_file(char *mode)
 {
