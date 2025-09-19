@@ -55,29 +55,29 @@ build CMakeFiles/contacts.dir/main.c.o: C_COMPILER__contacts_unscanned_Debug /Us
   OBJECT_DIR = CMakeFiles/contacts.dir
   OBJECT_FILE_DIR = CMakeFiles/contacts.dir
 
-build CMakeFiles/contacts.dir/menu_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/menu_control.c || cmake_object_order_depends_target_contacts
-  DEP_FILE = CMakeFiles/contacts.dir/menu_control.c.o.d
+build CMakeFiles/contacts.dir/service/menu_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/service/menu_control.c || cmake_object_order_depends_target_contacts
+  DEP_FILE = CMakeFiles/contacts.dir/service/menu_control.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/contacts.dir
-  OBJECT_FILE_DIR = CMakeFiles/contacts.dir
+  OBJECT_FILE_DIR = CMakeFiles/contacts.dir/service
 
-build CMakeFiles/contacts.dir/contact_structor.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/contact_structor.c || cmake_object_order_depends_target_contacts
-  DEP_FILE = CMakeFiles/contacts.dir/contact_structor.c.o.d
+build CMakeFiles/contacts.dir/model/contact_structor.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/model/contact_structor.c || cmake_object_order_depends_target_contacts
+  DEP_FILE = CMakeFiles/contacts.dir/model/contact_structor.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/contacts.dir
-  OBJECT_FILE_DIR = CMakeFiles/contacts.dir
+  OBJECT_FILE_DIR = CMakeFiles/contacts.dir/model
 
-build CMakeFiles/contacts.dir/contact_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/contact_control.c || cmake_object_order_depends_target_contacts
-  DEP_FILE = CMakeFiles/contacts.dir/contact_control.c.o.d
+build CMakeFiles/contacts.dir/repository/contact_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/repository/contact_control.c || cmake_object_order_depends_target_contacts
+  DEP_FILE = CMakeFiles/contacts.dir/repository/contact_control.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/contacts.dir
-  OBJECT_FILE_DIR = CMakeFiles/contacts.dir
+  OBJECT_FILE_DIR = CMakeFiles/contacts.dir/repository
 
-build CMakeFiles/contacts.dir/file_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/file_control.c || cmake_object_order_depends_target_contacts
-  DEP_FILE = CMakeFiles/contacts.dir/file_control.c.o.d
+build CMakeFiles/contacts.dir/io/file_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/io/file_control.c || cmake_object_order_depends_target_contacts
+  DEP_FILE = CMakeFiles/contacts.dir/io/file_control.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/contacts.dir
-  OBJECT_FILE_DIR = CMakeFiles/contacts.dir
+  OBJECT_FILE_DIR = CMakeFiles/contacts.dir/io
 
 
 # =============================================================================
@@ -87,7 +87,7 @@ build CMakeFiles/contacts.dir/file_control.c.o: C_COMPILER__contacts_unscanned_D
 #############################################
 # Link the executable contacts
 
-build contacts: C_EXECUTABLE_LINKER__contacts_Debug CMakeFiles/contacts.dir/main.c.o CMakeFiles/contacts.dir/menu_control.c.o CMakeFiles/contacts.dir/contact_structor.c.o CMakeFiles/contacts.dir/contact_control.c.o CMakeFiles/contacts.dir/file_control.c.o
+build contacts: C_EXECUTABLE_LINKER__contacts_Debug CMakeFiles/contacts.dir/main.c.o CMakeFiles/contacts.dir/service/menu_control.c.o CMakeFiles/contacts.dir/model/contact_structor.c.o CMakeFiles/contacts.dir/repository/contact_control.c.o CMakeFiles/contacts.dir/io/file_control.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk
   LINK_FLAGS = -L/opt/homebrew/opt/tcl-tk/lib
   OBJECT_DIR = CMakeFiles/contacts.dir

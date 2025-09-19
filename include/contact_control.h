@@ -17,11 +17,11 @@ typedef enum contact_status
 	NO_CONTACT = 4
 } CONTACT_STATUS;
 
-/*
-	MENU_SELECTION enum 의 PRINT_CONTACTS
-	모든 연락처 출력
+/**
+모든 연락처를 파일에서 읽어옵니다.
+@return 성공 시 읽어온 연락처의 개수, 실패 시 -1
  */
-CONTACT_STATUS get_all_contacts(CONTACT *contacts, const int max_contacts);
+int get_all_contacts(CONTACT *contacts, const int max_contacts);
 
 /*
 	MENU_SELECTION enum 의 REGISTER_CONTACT, UPDATE_CONTACT

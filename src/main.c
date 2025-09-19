@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include "headers/menu_control.h"
+#include "../include/menu_control.h"
 
 int main(void)
 {
@@ -19,7 +19,7 @@ int main(void)
             print_contacts();
             break;
         case REGISTER_CONTACT:
-            puts("register contact");
+            register_contact();
             break;
         case UPDATE_CONTACT:
             puts("update contact");

@@ -20,5 +20,13 @@ typedef struct contact
 */
 void contact_to_string_buffered(const CONTACT *contact, char *buffer, size_t size);
 
+/**
+ * 실제 콘솔에 출력될 CONTACT 의 문자열
+ * @param contact
+ * @param buffer
+ * @param size
+ */
+void contact_to_string_human_readable_buffered(const CONTACT *contact, char *buffer, size_t size);
+
 
 #endif //CONTACTS_STRUCTOR_H

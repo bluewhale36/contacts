@@ -2,42 +2,38 @@
 // Created by 우승훈 on 25. 9. 18.
 //
 
-#include "headers/contact_control.h"
+#include "../../include/contact_control.h"
 #include <string.h>
-#include "headers/file_control.h"
+#include "../../include/file_control.h"
 
-/*
-	MENU_SELECTION enum 의 PRINT_CONTACTS
-	모든 연락처 출력
- */
-CONTACT_STATUS get_all_contacts(CONTACT *contacts, const int max_contacts)
+
+int get_all_contacts(CONTACT *contacts, const int max_contacts)
 {
-	const FILE_CONTROL_RESULT file_control_result = open_file("r");
-	if (file_control_result.status == ERROR)
+	const FILE_CONTROL_RESULT res = open_file("r");
+	if (res.status == ERROR)
 	{
-		return FAILED;
+		return -1;
 	}
-	if (file_control_result.status == OPENED_AS_NEW_FILE)
+	if (res.status == OPENED_AS_NEW_FILE)
 	{
-		return NO_CONTACT;
+		close_file(res.fp);
+		return 0;
 	}
 
-	FILE *rfp = file_control_result.fp;
-	for (int i = 0; i < max_contacts; i++)
+	FILE *rfp = res.fp;
+	int i = 0;
+	for (; i < max_contacts; i++)
 	{
 		char str[200];
-		fgets(str, 200, rfp);
-
-		if (feof(rfp))
+		if (fgets(str, 200, rfp) == NULL)
 		{
 			break;
 		}
 
-		CONTACT contact;
-		deserialize_contact(&contact, str);
-		contacts[i] = contact;
+		deserialize_contact(&contacts[i], str);
 	}
-	return SUCCESS;
+	close_file(rfp);
+	return i;
 }
 
 /*

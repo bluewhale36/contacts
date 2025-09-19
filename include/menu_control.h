@@ -16,6 +16,7 @@ typedef enum menu_selection
 
 void menu_input(MENU_SELECTION *selection);
 void print_menu();
+void clear_console();
 
 /*
     각 enum 에 대응되는 함수

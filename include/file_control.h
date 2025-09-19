@@ -24,7 +24,7 @@ typedef struct file_control_result
 extern const char *file_path;
 
 FILE_CONTROL_RESULT open_file(char *mode);
-FILE_CONTROL_RESULT close_file(FILE *fp);
+FILE_STATUS close_file(FILE *fp);
 
 
 #endif //FILE_CONTROL_H
