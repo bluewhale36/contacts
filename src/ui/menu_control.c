@@ -4,14 +4,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../include/menu_control.h"
+
+#include <string.h>
+
 #include "../../include/contact_control.h"
 
-void menu_input(MENU_SELECTION *selection)
+void clear_read_buffer()
+{
+    while (getchar() != '\n');
+}
+
+void menu_input(int *selection)
 {
     printf("\n메뉴를 선택하세요 >> ");
+
     scanf("%d", selection);
+
     printf("\n");
+
+    // 콘솔 클리어
     clear_console();
+    // 입력 버퍼 지우기
+    clear_read_buffer();
 }
 
 void print_menu()
@@ -27,7 +41,8 @@ void print_menu()
 
 void clear_console()
 {
-    system("clear");
+    // system("cls");      // Windows
+    system("clear");    // MacOS
 }
 
 
@@ -42,9 +57,11 @@ void print_contacts()
         puts("------------------------------------------------------");
         for (int i = 0; i < count; i++)
         {
-            char buffer[200];
-            contact_to_string_human_readable_buffered(&contact_arr[i], buffer, 200);
+            char buffer[FILE_LINE_MAX_LENGTH];
+            contact_to_string_human_readable_buffered(&contact_arr[i], buffer, FILE_LINE_MAX_LENGTH);
             puts(buffer);
+            // 동적 메모리 할당 해제
+            free_contact_member(&contact_arr[i]);
         }
         puts("------------------------------------------------------");
     }
@@ -58,30 +75,34 @@ void print_contacts()
     }
 }
 
-void register_contact()
+void create_contact()
 {
-    CONTACT contact;
-    puts("새로운 연락처를 추가합니다.");
+    CONTACT_CREATOR creator;
 
-    printf("이름을 입력하세요 >> ");
-    scanf("%s", contact.name);
+    printf("이름을 입력하세요: ");
+    fgets(creator.name, sizeof(creator.name), stdin);
+    creator.name[strcspn(creator.name, "\n")] = '\0';
 
-    printf("나이를 입력하세요 >> ");
-    scanf("%d", &contact.age);
+    printf("나이를 입력하세요: ");
+    fgets(creator.age, sizeof(creator.age), stdin);
+    creator.age[strcspn(creator.age, "\n")] = '\0';
 
-    printf("전화번호를 숫자만 입력하세요 >> ");
-    scanf("%s", contact.phone);
+    printf("전화번호를 숫자만 입력하세요: ");
+    fgets(creator.phone, sizeof(creator.phone), stdin);
+    creator.phone[strcspn(creator.phone, "\n")] = '\0';
 
-    printf("메모를 입력하세요 >> ");
-    scanf("%s", contact.memo);
+    printf("메모를 입력하세요(선택사항): ");
+    fgets(creator.memo, sizeof(creator.memo), stdin);
+    creator.memo[strcspn(creator.memo, "\n")] = '\0';
 
-    contact.id = 100;
-
-    char buffer[200];
-    contact_to_string_buffered(&contact, buffer, 200);
-    puts(buffer);
-
-    save_one_contact(&contact);
+    if (save_one_contact(&creator) == CONTACT_FAILED)
+    {
+        fprintf(stderr, "Error Occurred while Saving New Contact. \n");
+    }
+    else
+    {
+        puts("\n연락처가 저장되었습니다.");
+    }
 }
 void update_contact()
 {

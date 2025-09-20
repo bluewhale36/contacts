@@ -9,36 +9,36 @@
 
 typedef enum contact_status
 {
+	NO_CONTACT = -4,
 	TOO_SMALL_BUFFER = -3,
 	UNSUPPORTED_PHONE_NUMBER = -2,
-	FAILED = -1,
-	SUCCESS = 0,
-	CREATED = 1,
-	UPDATED = 2,
-	DELETED = 3,
-	NO_CONTACT = 4
+	CONTACT_FAILED = -1,
+	CONTACT_SUCCESS = 0,
+	CONTACT_CREATED = 1,
+	CONTACT_UPDATED = 2,
+	CONTACT_DELETED = 3,
 } CONTACT_STATUS;
 
 extern const char phone_start_number_middle_is_4[][5];
 extern const char phone_start_number_middle_is_3[][5];
 
+
 /**
-모든 연락처를 파일에서 읽어옵니다.
-@return 성공 시 읽어온 연락처의 개수, 실패 시 -1
+ * 파일에서 max_contacts 만큼의 연락처를 조회하여 출력.<br/>
+ * 호출 위치에서 각 CONTACT 요소에 대해 free_contact_members(contact) 함수 실행 필요.
+ * @param contacts CONTACT 배열
+ * @param max_contacts 한번에 최대로 가져올 연락처 개수
+ * @return
  */
 int get_all_contacts(CONTACT *contacts, const int max_contacts);
 
-/*
-	MENU_SELECTION enum 의 REGISTER_CONTACT, UPDATE_CONTACT
-	하나의 연락처 저장, 수정.
+/**
+ * 인자로 받은 CONTACT_CREATOR 에 대해 연락처를 파일에 저장.<br/>
+ * 구현 위치에서 CONTACT 를 생성한 후, free_contact_members(contact) 함수 실행 필요.
+ * @param contact_creator 표준 입력 데이터를 받은 CONTACT_CREATOR
+ * @return
  */
-CONTACT_STATUS save_one_contact(const CONTACT *contact);
-
-/*
-	MENU_SELECTION enum 의 DELETE_CONTACT
-	하나의 연락처 삭제.
- */
-CONTACT_STATUS delete_one_contact(const CONTACT *contact);
+CONTACT_STATUS save_one_contact(const CONTACT_CREATOR *contact_creator);
 
 /**
  * 문자열을 역직렬화 하여 CONTACT 에 값을 대입.
@@ -57,5 +57,13 @@ CONTACT_STATUS deserialize_contact(CONTACT *contact, const char *str);
 CONTACT_STATUS serialize_contact(const CONTACT *contact, char *str);
 
 CONTACT_STATUS add_hyphen_to_phone_str(const char *phone_str, char *hyphened_buffer, const size_t buffer_size);
+
+/**
+ * CONTACT_CREATOR 의 데이터를 CONTACT 에 저장시키는 함수
+ * @param contact 데이터가 저장될 CONTACT
+ * @param contact_creator 값을 가지고 있는 CONTACT_CREATOR
+ * @return CONTACT 에 데이터 저장 성공 시 0 반환. 실패 시 -1 반환.
+ */
+CONTACT_STATUS contact_from_creator(CONTACT *contact, const CONTACT_CREATOR *contact_creator);
 
 #endif //CONTACT_CONTROL_H

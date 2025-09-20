@@ -10,4 +10,6 @@ add_executable(
         include/contact_structor.h src/model/contact_structor.c
         include/contact_control.h src/service/contact_control.c
         include/file_control.h src/persistence/file_control.c
+        include/input_validation.h
+        include/identification_control.h src/service/identification_control.c
 )

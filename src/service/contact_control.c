@@ -3,9 +3,10 @@
 //
 
 #include "../../include/contact_control.h"
-#include <string.h>
 #include <stdbool.h>
+#include <string.h>
 #include "../../include/file_control.h"
+#include "../../include/identification_control.h"
 
 const char phone_start_number_middle_is_4[][5] =
 {
@@ -50,6 +51,8 @@ int get_all_contacts(CONTACT *contacts, const int max_contacts)
 		}
 
 		deserialize_contact(&contacts[i], str);
+		char buffer[200];
+		contact_to_string_buffered(&contacts[i], buffer, 200);
 	}
 	close_file(rfp);
 	// 읽어온 연락처 개수 반환
@@ -57,32 +60,66 @@ int get_all_contacts(CONTACT *contacts, const int max_contacts)
 }
 
 
-CONTACT_STATUS save_one_contact(const CONTACT *contact)
+CONTACT_STATUS save_one_contact(const CONTACT_CREATOR *contact_creator)
 {
-	char hyphened_buffer[20];
-	add_hyphen_to_phone_str(contact -> phone, hyphened_buffer, sizeof(hyphened_buffer)/sizeof(hyphened_buffer[0]));
-	strcpy(contact -> phone, hyphened_buffer);
+	CONTACT new_contact;
 
-	char contact_buffer[FILE_LINE_MAX_LENGTH];
-	serialize_contact(contact, contact_buffer);
-	puts(contact_buffer);
+	/*
+	 *	contact_creator 데이터를 contact 로 복사 및 id 생성
+	 */
+	contact_from_creator(&new_contact, contact_creator);
 
+	// 향후 예외 처리 목적
+	// if (contact_from_creator(&new_contact, contact_creator) != SUCCESS)
+	// {
+	// 	fprintf(stderr, "Error from converting creator to contact struct.\n");
+	// 	return FAILED;
+	// }
+
+	/*
+	 *	CONTACT 직렬화
+	 */
+	char str[FILE_LINE_MAX_LENGTH];
+	if (serialize_contact(&new_contact, str) == CONTACT_FAILED)
+	{
+		fprintf(stderr, "Error serializing contact struct. \n");
+		return CONTACT_FAILED;
+	}
+	/*
+	 * 직렬화된 문자열에 가변 길이 할당
+	 */
+	char *ptr = (char*) malloc(sizeof(char) * strlen(str) + 1);
+	strcpy(ptr, str);
+
+	/*
+	 *	파일에 쓰기 작업 시작
+	 */
 	FILE_CONTROL_RESULT res = open_file("a");
 	if (res.status == OPENED)
 	{
-		fputs(contact_buffer, res.fp);
+		// 파일이 열린 상태인 경우 직렬화된 문자열 작성.
+		if (fputs(ptr, res.fp) < 0)
+		{
+			// 파일에 쓰인 문자열 없을 경우
+			fprintf(stderr, "Error writing to file. \n");
+			return CONTACT_FAILED;
+		}
+	}
+	else if (res.status == ERROR)
+	{
+		// 파일이 정상적으로 열리지 못한 경우
+		fprintf(stderr, "Error opening file. \n");
+		return CONTACT_FAILED;
 	}
 	close_file(res.fp);
 
-	return SUCCESS;
+	// 사용했던 동적 메모리 전부 할당 해제
+	free(ptr);
+	free_contact_member(&new_contact);
+
+	return CONTACT_CREATED;
 }
 
-
-CONTACT_STATUS delete_one_contact(const CONTACT *contact)
-{
-
-	return FAILED;
-}
 
 CONTACT_STATUS deserialize_contact(CONTACT *contact, const char *str)
 {
@@ -91,33 +128,39 @@ CONTACT_STATUS deserialize_contact(CONTACT *contact, const char *str)
 
 	char *token = strtok(given_str, ";");
 
-	contact -> id = strtol(token, NULL, 0);
+	contact -> id = strtoul(token, NULL, 0);
 	token = strtok(NULL, ";");
 
-	strcpy(contact -> name, token);
+	contact -> name = strdup(token);
 	token = strtok(NULL, ";");
 
-	contact -> age = atoi(token);
+	contact -> age = (unsigned short) atoi(token);
 	token = strtok(NULL, ";");
 
-	strcpy(contact -> phone, token);
+	contact -> phone = strdup(token);
 	token = strtok(NULL, ";");
 
-	// 메모는 작성하지 않는 경우도 있으므로 NULL 값 확인
-	strcpy (contact -> memo, token != NULL ? token : "");
+	contact -> memo = strdup(token);
 
-	return SUCCESS;
+	return CONTACT_SUCCESS;
 }
+
 
 CONTACT_STATUS serialize_contact(const CONTACT *contact, char *str)
 {
-	sprintf(
-		str,
-		"%ld;%s;%d;%s;%s;\n",
-		contact -> id, contact -> name, contact -> age, contact -> phone, contact -> memo
-	);
-	return SUCCESS;
+	if (
+		sprintf(
+			str,
+			"%lu;%s;%hu;%s;%s;\n",
+			contact -> id, contact -> name, contact -> age, contact -> phone, contact -> memo
+		) < 0
+	)
+	{
+		return CONTACT_FAILED;
+	}
+	return CONTACT_SUCCESS;
 }
+
 
 CONTACT_STATUS add_hyphen_to_phone_str(const char *phone_str, char *hyphened_buffer, const size_t buffer_size)
 {
@@ -134,7 +177,7 @@ CONTACT_STATUS add_hyphen_to_phone_str(const char *phone_str, char *hyphened_buf
 			number_count++;
 			number_idx[++idx1] = i;
 		}
-		else if (curr_ch == '.' || curr_ch == '-')
+		else if (curr_ch == '.' || curr_ch == '-' || curr_ch == ' ')
 		{
 			sign_count++;
 		}
@@ -246,6 +289,30 @@ CONTACT_STATUS add_hyphen_to_phone_str(const char *phone_str, char *hyphened_buf
 			idx2++;
 		}
 	}
-	puts(hyphened_buffer);
-	return SUCCESS;
+	return CONTACT_SUCCESS;
 }
+
+
+CONTACT_STATUS contact_from_creator(CONTACT *contact, const CONTACT_CREATOR *contact_creator)
+{
+	unsigned long id;
+	if (get_latest_id(&id) == ID_NOT_FOUND)
+	{
+		fprintf(stderr, "Could not found ID from file");
+	}
+
+	contact -> id = ++id;
+
+	contact -> name = strdup(contact_creator -> name);
+
+	contact -> age = (unsigned short) atoi(contact_creator -> age);
+
+	char hyphened_buffer[15];
+	add_hyphen_to_phone_str(contact_creator -> phone, hyphened_buffer, sizeof(hyphened_buffer));
+	contact -> phone = strdup(hyphened_buffer);
+
+	contact -> memo = strdup(contact_creator -> memo);
+
+	return CONTACT_SUCCESS;
+}
+

@@ -79,6 +79,12 @@ build CMakeFiles/contacts.dir/src/persistence/file_control.c.o: C_COMPILER__cont
   OBJECT_DIR = CMakeFiles/contacts.dir
   OBJECT_FILE_DIR = CMakeFiles/contacts.dir/src/persistence
 
+build CMakeFiles/contacts.dir/src/service/identification_control.c.o: C_COMPILER__contacts_unscanned_Debug /Users/wooseunghun/src/C/contacts/src/service/identification_control.c || cmake_object_order_depends_target_contacts
+  DEP_FILE = CMakeFiles/contacts.dir/src/service/identification_control.c.o.d
+  FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/contacts.dir
+  OBJECT_FILE_DIR = CMakeFiles/contacts.dir/src/service
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target contacts
@@ -87,7 +93,7 @@ build CMakeFiles/contacts.dir/src/persistence/file_control.c.o: C_COMPILER__cont
 #############################################
 # Link the executable contacts
 
-build contacts: C_EXECUTABLE_LINKER__contacts_Debug CMakeFiles/contacts.dir/src/main.c.o CMakeFiles/contacts.dir/src/ui/menu_control.c.o CMakeFiles/contacts.dir/src/model/contact_structor.c.o CMakeFiles/contacts.dir/src/service/contact_control.c.o CMakeFiles/contacts.dir/src/persistence/file_control.c.o
+build contacts: C_EXECUTABLE_LINKER__contacts_Debug CMakeFiles/contacts.dir/src/main.c.o CMakeFiles/contacts.dir/src/ui/menu_control.c.o CMakeFiles/contacts.dir/src/model/contact_structor.c.o CMakeFiles/contacts.dir/src/service/contact_control.c.o CMakeFiles/contacts.dir/src/persistence/file_control.c.o CMakeFiles/contacts.dir/src/service/identification_control.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk
   LINK_FLAGS = -L/opt/homebrew/opt/tcl-tk/lib
   OBJECT_DIR = CMakeFiles/contacts.dir
