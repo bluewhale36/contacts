@@ -8,20 +8,21 @@
 typedef enum menu_selection
 {
     PRINT_CONTACTS = 1,
-    REGISTER_CONTACT,
+    CREATE_CONTACT,
     UPDATE_CONTACT,
     DELETE_CONTACT,
     EXIT_PROGRAM = 0
 } MENU_SELECTION;
 
-void menu_input(MENU_SELECTION *selection);
+void menu_input(int *selection);
 void print_menu();
+void clear_console();
 
 /*
     각 enum 에 대응되는 함수
 */
 void print_contacts();
-void register_contact();
+void create_contact();
 void update_contact();
 void delete_contact();
 

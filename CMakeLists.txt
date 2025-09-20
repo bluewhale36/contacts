@@ -5,9 +5,11 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(
         contacts
-        main.c
-        headers/menu_control.h menu_control.c
-        headers/contact_structor.h contact_structor.c
-        headers/contact_control.h contact_control.c
-        headers/file_control.h file_control.c
+        src/main.c
+        include/menu_control.h src/ui/menu_control.c
+        include/contact_structor.h src/model/contact_structor.c
+        include/contact_control.h src/service/contact_control.c
+        include/file_control.h src/persistence/file_control.c
+        include/input_validation.h
+        include/identification_control.h src/service/identification_control.c
 )
